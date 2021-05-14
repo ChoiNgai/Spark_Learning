@@ -1,0 +1,31 @@
+from pyspark.sql import SparkSession
+from pyspark.ml.linalg import Vectors
+
+from PyML.FuzzyClustering.Algorithm import fcm
+import numpy as np
+
+spark = SparkSession.builder.appName('pyspark - read csv').getOrCreate()
+sc = spark.sparkContext 
+data = spark.read.csv("E:/Documents/code/PySpark/data/wine.csv")
+
+'''读取数据'''
+spark = SparkSession.builder.appName('pyspark - read csv').getOrCreate()
+sc = spark.sparkContext 
+data = spark.read.csv("E:/Documents/code/PySpark/data/wine.csv")            #数据
+label = spark.read.csv("E:/Documents/code/PySpark/data/winelabel.csv")      #标签
+
+'''参数设置'''
+cluster_n = int(label.select("*").rdd.max()[0])  #类簇数(此行参数建议不改变)
+
+import numpy as np
+import random
+import math
+import PyML.FuzzyClustering.ClusteringIteration as ClusteringIteration
+import PyML.FuzzyClustering.ClusterAidedComputing as ClusterAidedComputing
+
+cluster_n
+m = 2
+max_iter = 100
+e = 0.00001
+printOn = 1
+obj_fcn = np.zeros(max_iter)
